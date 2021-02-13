@@ -1,5 +1,4 @@
 
-import os
 import discord
 import sqlite3 as sql
 import re
