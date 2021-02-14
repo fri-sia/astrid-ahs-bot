@@ -5,7 +5,6 @@ import re
 import secret
 import db
 import github
-import threading
 import asyncio
 
 TOKEN = secret.TOKEN
