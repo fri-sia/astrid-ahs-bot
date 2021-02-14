@@ -53,6 +53,13 @@ async def on_message(msg):
         await send_letter(msg)
     elif msg.content == 'update commits' and str(msg.author) == QUEEN:
         await github.post_new_commits(astrids_room)
+    elif msg.content == 'send valentine letters pog' and str(msg.author) == QUEEN:
+        for (recipent, text, _) in c.execute('SELECT * FROM valentine_letter'):
+            usr = find_by(client.users, lambda u: user_has_tag(u, recipent))
+            await usr.send(f'''The following is a valentines letter sent to you :heart:
+
+            {text}''')
+
 
 
 def user_has_tag(user, tag):
