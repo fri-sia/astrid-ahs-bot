@@ -45,7 +45,7 @@ async def on_message(msg):
             return
         [header, body] = parsed_letter
         text = "\n\n".join(body)
-        m = re.search('[A-z]+#[0-9]+', header)
+        m = re.search('\w+(?:-\w+)*#[0-9]+', header)
         recipent_tag = m.group(0)
         recipent = find_by(client.users, lambda u: user_has_tag(u, recipent_tag))
         if(recipent is not None):
