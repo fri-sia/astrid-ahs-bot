@@ -83,7 +83,7 @@ async def update_commits_loop():
     while True:
         print("Updating commits")
         await github.post_new_commits(astrids_room)
-        await asyncio.sleep(60)
+        await asyncio.sleep(60*5)
 
 async def send_letter(msg):
     (parsed_letter, err) = read_letter(msg)
@@ -92,7 +92,7 @@ async def send_letter(msg):
         return
     [header, body] = parsed_letter
     text = "\n\n".join(body)
-    m = re.search('\w+(?:-\w+)*#[0-9]+', header)
+    m = re.search('\w+(?:[-\s]\w+)*#[0-9]+', header)
     recipent_tag = m.group(0)
     recipent = find_by(client.users, lambda u: user_has_tag(u, recipent_tag))
     if(recipent is not None):
