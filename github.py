@@ -12,14 +12,17 @@ def fetch_commits():
     r = requests.get(repo_url('commits'))
     return r.json()
 
+def commit_already_posted(commit):
+    c.execute('''SELECT * FROM commits
+    WHERE sha = ?''', (commit['sha'],))
+    res = c.fetchone()
+    return res is not None
+
 async def post_new_commits(chan):
     commits = fetch_commits();
     i = 0
     while i < len(commits):
-        c.execute('''SELECT * FROM commits
-        WHERE sha = ?''', (commits[i]['sha'],))
-        res = c.fetchone()
-        if res is not None:
+        if commit_already_posted(commits[i]):
             break
         i = i + 1
     new_commits_to_post = i
